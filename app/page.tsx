@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/Navbar"
 import { Banner } from "@/components/Banner"
 import { Features } from "@/components/Features"
+import { PricingSection } from "@/components/PricingSection"
 
 export default function Page() {
   return (
@@ -8,6 +9,7 @@ export default function Page() {
       <Navbar />
       <Banner />
       <Features />
+      <PricingSection />
     </main>
   )
 }
