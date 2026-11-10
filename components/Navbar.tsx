@@ -43,15 +43,17 @@ export function Navbar() {
 
         <div className="hidden items-center gap-6 md:flex">
           <Link
-            href="#"
+            href="/signin"
             className="text-sm font-medium text-gray-300 transition-colors hover:text-white">
             Sign In
           </Link>
-          <Button
-            size="lg"
-            className="bg-indigo-600 text-white hover:bg-indigo-500">
-            Get Started
-          </Button>
+          <Link href="/signup">
+            <Button
+              size="lg"
+              className="bg-indigo-600 text-white hover:bg-indigo-500">
+              Get Started
+            </Button>
+          </Link>
         </div>
 
         <button
@@ -81,16 +83,18 @@ export function Navbar() {
           ))}
           <div className="mt-4 flex flex-col gap-2 border-t border-white/10 pt-4">
             <Link
-              href="#"
+              href="/signin"
               className="rounded-lg px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:bg-white/10 hover:text-white"
               onClick={() => setIsOpen(false)}>
               Sign In
             </Link>
-            <Button
-              size="lg"
-              className="w-full bg-indigo-600 text-white hover:bg-indigo-500">
-              Get Started
-            </Button>
+            <Link href="/signup" className="w-full" onClick={() => setIsOpen(false)}>
+              <Button
+                size="lg"
+                className="w-full bg-indigo-600 text-white hover:bg-indigo-500">
+                Get Started
+              </Button>
+            </Link>
           </div>
         </nav>
       </div>
