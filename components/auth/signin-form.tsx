@@ -29,16 +29,27 @@ export function SignInForm() {
     setError(null)
     setLoading(true)
 
-    const { error } = await authClient.signIn.email({ email, password })
+    try {
+      const { data, error } = await authClient.signIn.email({ email, password })
 
-    if (error) {
-      setError(error.message || "Invalid email or password.")
+      if (error) {
+        setError(error.message || "Invalid email or password.")
+        return
+      }
+
+      if (data) {
+        router.replace("/")
+        router.refresh()
+      }
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again."
+      )
+    } finally {
       setLoading(false)
-      return
     }
-
-    router.replace("/")
-    router.refresh()
   }
 
   return (

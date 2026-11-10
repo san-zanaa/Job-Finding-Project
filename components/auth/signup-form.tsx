@@ -30,20 +30,31 @@ export function SignUpForm() {
     setError(null)
     setLoading(true)
 
-    const { error } = await authClient.signUp.email({
-      name,
-      email,
-      password,
-    })
+    try {
+      const { data, error } = await authClient.signUp.email({
+        name,
+        email,
+        password,
+      })
 
-    if (error) {
-      setError(error.message || "Could not create your account.")
+      if (error) {
+        setError(error.message || "Could not create your account.")
+        return
+      }
+
+      if (data) {
+        router.replace("/signin")
+        router.refresh()
+      }
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again."
+      )
+    } finally {
       setLoading(false)
-      return
     }
-
-    router.replace("/")
-    router.refresh()
   }
 
   return (
