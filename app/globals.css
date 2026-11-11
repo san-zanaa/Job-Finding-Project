@@ -142,3 +142,53 @@
 .animate-price-in {
   animation: price-in 0.35s ease-out;
 }
+
+@keyframes glow-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+.animate-glow-breathe {
+  animation: glow-breathe 7s ease-in-out infinite;
+}
+
+@keyframes sheen-sweep {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(2600px);
+  }
+}
+
+.animate-sheen-sweep {
+  animation: sheen-sweep 12s linear infinite;
+  will-change: transform;
+}
+
+@keyframes star-twinkle {
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-star-twinkle {
+  animation: star-twinkle 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-glow-breathe,
+  .animate-sheen-sweep,
+  .animate-star-twinkle {
+    animation: none;
+  }
+}
