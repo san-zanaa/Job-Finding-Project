@@ -37,6 +37,7 @@ export function Banner() {
           src="/assets/cta-bg.png"
           alt=""
           fill
+          priority
           className="object-cover opacity-40"/>
       </div>
 

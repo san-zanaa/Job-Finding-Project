@@ -231,7 +231,7 @@ export function PricingSection() {
 
                 </div>
 
-                <div className="mb-8 min-h-[105px]">
+                <div className="mb-3 min-h-[105px]">
                   <div className="flex items-end gap-2">
                     <span
                       key={`${plan.name}-${billing}`}
@@ -257,10 +257,10 @@ export function PricingSection() {
 
                 </div>
 
-                <div className="mb-7 h-px bg-gradient-to-r from-white/15 via-white/5 to-transparent" />
+                <div className="mb-5 h-px bg-gradient-to-r from-white/15 via-white/5 to-transparent" />
                 <div className="flex-1">
                   <p className="mb-5 text-sm font-medium text-zinc-300">
-                    What's included:
+                    What&apos;s included:
                   </p>
 
                   <ul className="space-y-4">
@@ -283,7 +283,7 @@ export function PricingSection() {
                   type="button"
                   onClick={() => setSelectedPlan(plan.name)}
                   aria-pressed={isSelected}
-                  className={`mt-10 flex w-full items-center justify-between rounded-xl px-5 py-4 text-sm font-medium transition-all duration-300 ${
+                  className={`mt-10 flex w-full items-center justify-between rounded-xl px-5 py-4 text-sm font-medium transition-all duration-300 cursor-pointer ${
                     isSelected
                       ? "bg-indigo-600 text-white"
                       : plan.recommended
@@ -311,7 +311,7 @@ export function PricingSection() {
           <div className="mx-auto mt-8 flex max-w-xl flex-wrap items-center justify-center gap-3 rounded-2xl border border-indigo-400/20 bg-indigo-500/10 px-5 py-4 text-center animate-in fade-in slide-in-from-bottom-3 duration-500">
             <Check size={18} className="text-indigo-300" />
             <p className="text-sm text-zinc-300">
-              You've selected the{" "}
+              You&apos;ve selected the{" "}
               <span className="font-semibold text-white">
                 {selectedPlan}
               </span>{" "}
