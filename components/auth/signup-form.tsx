@@ -15,13 +15,33 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { authClient } from "@/lib/auth-client"
+import { cn } from "@/lib/utils"
+import type { UserRole } from "@/lib/roles"
 import { SocialAuth } from "./social-auth"
+
+const roleOptions: {
+  value: Exclude<UserRole, "admin">
+  label: string
+  description: string
+}[] = [
+  {
+    value: "seeker",
+    label: "Job Seeker",
+    description: "Find and apply to jobs",
+  },
+  {
+    value: "recruiter",
+    label: "Recruiter",
+    description: "Post jobs and hire talent",
+  },
+]
 
 export function SignUpForm() {
   const router = useRouter()
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [role, setRole] = useState<Exclude<UserRole, "admin">>("seeker")
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
@@ -35,6 +55,7 @@ export function SignUpForm() {
         name,
         email,
         password,
+        role,
       })
 
       if (error) {
@@ -43,6 +64,13 @@ export function SignUpForm() {
       }
 
       if (data) {
+        // Hand the credentials to the sign-in page so the fields are
+        // pre-filled when the user lands there (read once, then wiped).
+        sessionStorage.setItem(
+          "hl-signup-credentials",
+          JSON.stringify({ email, password })
+        )
+
         router.replace("/signin")
         router.refresh()
       }
@@ -120,6 +148,32 @@ export function SignUpForm() {
               onChange={(event) => setPassword(event.target.value)}
               className="border-white/10 bg-white/5 text-white placeholder:text-gray-500 focus-visible:border-indigo-500/60 focus-visible:ring-indigo-500/40"
             />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label className="text-gray-300">I want to join as</Label>
+            <div className="grid grid-cols-2 gap-2">
+              {roleOptions.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => setRole(option.value)}
+                  aria-pressed={role === option.value}
+                  className={cn(
+                    "flex flex-col items-start gap-1 rounded-lg border px-3 py-2.5 text-left transition-colors",
+                    role === option.value
+                      ? "border-indigo-500/60 bg-indigo-500/10"
+                      : "border-white/10 bg-white/5 hover:border-white/20"
+                  )}>
+                  <span className="text-sm font-medium text-white">
+                    {option.label}
+                  </span>
+                  <span className="text-xs text-gray-400">
+                    {option.description}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
 
           <Button

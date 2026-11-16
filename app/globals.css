@@ -45,6 +45,27 @@
     --radius-2xl: calc(var(--radius) * 1.8);
     --radius-3xl: calc(var(--radius) * 2.2);
     --radius-4xl: calc(var(--radius) * 2.6);
+    /* HireLoop dashboard palette (from hireloop.fig) */
+    --color-hl-bg: var(--hl-bg);
+    --color-hl-surface: var(--hl-surface);
+    --color-hl-card: var(--hl-card);
+    --color-hl-raise: var(--hl-raise);
+    --color-hl-sunken: var(--hl-sunken);
+    --color-hl-hover: var(--hl-hover);
+    --color-hl-active: var(--hl-active);
+    --color-hl-chip: var(--hl-chip);
+    --color-hl-brand: var(--hl-brand);
+    --color-hl-brand-soft: var(--hl-brand-soft);
+    --color-hl-brand-text: var(--hl-brand-text);
+    --color-hl-text: var(--hl-text);
+    --color-hl-text-strong: var(--hl-text-strong);
+    --color-hl-muted: var(--hl-muted);
+    --color-hl-faint: var(--hl-faint);
+    --color-hl-success: var(--hl-success);
+    --color-hl-success-soft: var(--hl-success-soft);
+    --color-hl-warn: var(--hl-warn);
+    --color-hl-danger: var(--hl-danger);
+    --color-hl-info: var(--hl-info);
 }
 
 :root {
@@ -126,6 +147,30 @@
   html {
     @apply font-sans;
     }
+}
+
+/* HireLoop dashboard tokens — extracted from hireloop.fig (HireLoop 2.0) */
+:root {
+  --hl-bg: #08080a;            /* app shell background */
+  --hl-surface: #0e0e11;       /* main content surface */
+  --hl-card: #141418;          /* cards / tables */
+  --hl-raise: #1a1a1f;         /* raised buttons, table headers */
+  --hl-sunken: #0c0c0f;        /* inputs */
+  --hl-hover: #1b1b1e;         /* nav hover */
+  --hl-active: #232327;        /* nav active */
+  --hl-chip: #222228;          /* icon chips */
+  --hl-brand: #5c53fe;         /* primary action */
+  --hl-brand-soft: #8f88ff;    /* brand text on tinted bg */
+  --hl-brand-text: #c3c0ff;    /* brand-tinted links */
+  --hl-text: #ededef;          /* primary text */
+  --hl-text-strong: #f4f4f5;   /* headings */
+  --hl-muted: #a0a0ab;         /* secondary text */
+  --hl-faint: #6e6e78;         /* tertiary text / table heads */
+  --hl-success: #22c55e;
+  --hl-success-soft: #4ade80;
+  --hl-warn: #f59e0b;
+  --hl-danger: #ef4444;
+  --hl-info: #60a5fa;
 }
 
 @keyframes price-in {

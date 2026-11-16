@@ -1,6 +1,11 @@
 "use client"
 
-import { useState, type FormEvent } from "react"
+import {
+  useMemo,
+  useState,
+  useSyncExternalStore,
+  type FormEvent,
+} from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Loader2 } from "lucide-react"
@@ -17,12 +22,66 @@ import { Label } from "@/components/ui/label"
 import { authClient } from "@/lib/auth-client"
 import { SocialAuth } from "./social-auth"
 
+const SIGNUP_CREDENTIALS_KEY = "hl-signup-credentials"
+
+type SignupCredentials = { email: string; password: string }
+
+/* sessionStorage is an external store — read it hydration-safely by exposing
+   a null snapshot on the server so the prerendered HTML starts empty. */
+function subscribeToSessionStorage() {
+  // Values are consumed once; no live subscription is needed.
+  return () => {}
+}
+
+function getSignupCredentialsSnapshot() {
+  return window.sessionStorage.getItem(SIGNUP_CREDENTIALS_KEY)
+}
+
+function getSignupCredentialsServerSnapshot() {
+  return null
+}
+
 export function SignInForm() {
   const router = useRouter()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState<string | null>(null)
+  const [created, setCreated] = useState(false)
   const [loading, setLoading] = useState(false)
+
+  const stored = useSyncExternalStore(
+    subscribeToSessionStorage,
+    getSignupCredentialsSnapshot,
+    getSignupCredentialsServerSnapshot
+  )
+
+  const prefill = useMemo<SignupCredentials | null>(() => {
+    if (!stored) return null
+
+    try {
+      const parsed = JSON.parse(stored) as Partial<SignupCredentials>
+
+      if (typeof parsed.email !== "string" && typeof parsed.password !== "string") {
+        return null
+      }
+
+      return { email: parsed.email ?? "", password: parsed.password ?? "" }
+    } catch {
+      return null
+    }
+  }, [stored])
+
+  // Consume the sign-up payload while rendering so the fields are already
+  // filled in on the first client paint (docs: "adjusting state during render").
+  const prefillKey = prefill ? `${prefill.email}\u0000${prefill.password}` : ""
+  const [appliedPrefill, setAppliedPrefill] = useState("")
+
+  if (prefill && prefillKey !== appliedPrefill) {
+    setAppliedPrefill(prefillKey)
+    if (prefill.email) setEmail(prefill.email)
+    if (prefill.password) setPassword(prefill.password)
+    setCreated(true)
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -38,6 +97,9 @@ export function SignInForm() {
       }
 
       if (data) {
+        // Hand-off is complete — drop the stored credentials.
+        sessionStorage.removeItem(SIGNUP_CREDENTIALS_KEY)
+
         router.replace("/")
         router.refresh()
       }
@@ -62,6 +124,12 @@ export function SignInForm() {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+          {created ? (
+            <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-300">
+              Account created! Your email and password are filled in below —
+              just press Sign in.
+            </div>
+          ) : null}
           {error ? (
             <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-300">
               {error}
