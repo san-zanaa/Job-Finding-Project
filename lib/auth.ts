@@ -30,11 +30,25 @@ function adminEmails() {
     .filter(Boolean)
 }
 
+/** Local dev origins trusted in addition to baseURL. */
+const trustedOrigins =
+  process.env.NODE_ENV === "production"
+    ? []
+    : [
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://localhost:3002",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:3001",
+        "http://127.0.0.1:3002",
+      ]
+
 function buildAuth() {
   const mongoClient = getClient()
 
   return betterAuth({
     baseURL: process.env.BETTER_AUTH_URL,
+    trustedOrigins,
     emailAndPassword: {
       enabled: true,
     },
