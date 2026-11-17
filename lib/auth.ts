@@ -22,7 +22,6 @@ function getClient() {
   return client
 }
 
-/** Comma separated list of emails that are granted the admin role on signup. */
 function adminEmails() {
   return (process.env.ADMIN_EMAILS ?? "")
     .split(",")
@@ -82,7 +81,6 @@ function buildAuth() {
               return { data: { ...user, role: "admin" as const } }
             }
 
-            // Sanitize whatever the client sent during signup.
             const role = isUserRole(user.role) ? user.role : DEFAULT_ROLE
             return { data: { ...user, role } }
           },
@@ -103,5 +101,4 @@ export function getAuth() {
   return auth
 }
 
-/** Inferred better-auth instance type, usable from client code for plugins. */
 export type Auth = ReturnType<typeof buildAuth>

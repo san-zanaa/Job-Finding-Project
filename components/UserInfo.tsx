@@ -64,29 +64,7 @@ const UserInfo = () => {
               <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">{user.name}</h2>
               <p className="mb-8 text-gray-500">{user.email}</p>
 
-              <Link
-                href="/create-event"
-                onClick={() => setIsOpen(false)}
-                className="mb-3 block text-sm text-gray-700 flex gap-2 dark:text-gray-300">
-                <CirclePlus size={16} className="text-[#0ead69]" />
-                Create Events
-              </Link>
-
-              <Link
-                href="/manage-events"
-                onClick={() => setIsOpen(false)}
-                className="mb-3 block text-sm text-gray-700 flex gap-2 dark:text-gray-300">
-                <Settings size={16} className="text-[#0ead69]" />
-                Manage Events
-              </Link>
-
-              <Link
-                href="/joined-events"
-                onClick={() => setIsOpen(false)}
-                className="mb-6 block text-sm text-gray-800 flex gap-2 dark:text-gray-300">
-                <CircleCheck size={16} className="text-[#0ead69]" />
-                Joined Events
-              </Link>
+          
 
               <button
                 onClick={handleSignOut}

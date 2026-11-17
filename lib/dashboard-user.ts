@@ -11,10 +11,6 @@ export type DashboardUser = {
   role: UserRole;
 };
 
-/**
- * Reads the better-auth session on the server and normalizes the user into a
- * strongly typed dashboard user (role is guaranteed).
- */
 export async function getDashboardUser(): Promise<DashboardUser | null> {
   const session = await getAuth().api.getSession({
     headers: await headers(),
@@ -35,10 +31,6 @@ export async function getDashboardUser(): Promise<DashboardUser | null> {
   };
 }
 
-/**
- * Same as `getDashboardUser`, but redirects unauthenticated visitors to the
- * sign-in page.
- */
 export async function requireDashboardUser(): Promise<DashboardUser> {
   const user = await getDashboardUser();
 
@@ -49,10 +41,7 @@ export async function requireDashboardUser(): Promise<DashboardUser> {
   return user;
 }
 
-/**
- * Enforces the role allowed on a dashboard route segment. Users with another
- * role are bounced to their own dashboard home.
- */
+
 export async function requireRole(...allowed: UserRole[]): Promise<DashboardUser> {
   const user = await requireDashboardUser();
 

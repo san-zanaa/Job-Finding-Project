@@ -64,8 +64,6 @@ export function SignUpForm() {
       }
 
       if (data) {
-        // Hand the credentials to the sign-in page so the fields are
-        // pre-filled when the user lands there (read once, then wiped).
         sessionStorage.setItem(
           "hl-signup-credentials",
           JSON.stringify({ email, password })

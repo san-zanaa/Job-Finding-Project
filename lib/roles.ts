@@ -15,7 +15,6 @@ export function resolveRole(value: unknown): UserRole {
   return isUserRole(value) ? value : DEFAULT_ROLE
 }
 
-/** Dashboard home path for each role. */
 export const ROLE_HOME: Record<UserRole, string> = {
   seeker: "/dashboard/seeker",
   recruiter: "/dashboard/recruiter",
